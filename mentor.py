@@ -22,15 +22,7 @@ class Mentor():
     # }, ...]
     @classmethod
     def _1_list_mentors(cls):
-        mentors = cls.get_all()
-        mentor_list = []
-        for mentor in mentors:
-            mentor_dict = {}
-            mentor_dict['last_name'] = mentor.last_name
-            mentor_dict['first_name'] = mentor.first_name
-            mentor_list.append(mentor_dict)
-
-        return mentor_list
+        return [{'first_name': mentor.first_name, 'last_name': mentor.last_name} for mentor in cls.get_all()]
 
     # Return the nick_name property of all the mentors located in Miskolc
     # returns: list of dictionaries
@@ -39,24 +31,11 @@ class Mentor():
     # }, ...]
     @classmethod
     def _2_list_mentors_from_miskolc(cls):
-        mentors = cls.get_all()
-        mentor_list = []
-        for mentor in mentors:
-            mentor_dict = {}
-            if mentor.city == 'Miskolc':
-                mentor_dict['nick_name'] = mentor.nick_name
-                mentor_list.append(mentor_dict)
-
-        return mentor_list
+        return [{'nick_name': mentor.nick_name} for mentor in cls.get_all() if mentor.city == 'Miskolc']
 
     # Return the highest favourite number of all mentors
     # returns: integer
     # example: 927
     @classmethod
     def _3_greatest_favourite_number(cls):
-        mentors = cls.get_all()
-        fav_numbers = []
-        for mentor in mentors:
-            if mentor.favourite_number is not None:
-                fav_numbers.append(mentor.favourite_number)
-        return max(fav_numbers)
+        return max(mentor.favourite_number for mentor in cls.get_all() if mentor.favourite_number is not None)
